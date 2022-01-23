@@ -9,6 +9,7 @@ The app uses the devices location. See [instructions](https://docs.expo.dev/vers
 To run the app, type:
 
 npm install
+
 expo start
 
 
