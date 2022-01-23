@@ -25,7 +25,7 @@ export default function App() {
       car_id: 1,
       charger_id: id
     })
-    console.log('response status: ', response)
+    setStatus(response.status)
   }
   catch (e) {
     setStatus(e.message)
@@ -61,15 +61,16 @@ export default function App() {
           <Text style={styles.title}>Allow us to fetch your location and you'll see 10 nearest charging stations!</Text>
         {errorMsg && <Text>{errorMsg}</Text>}
         {status && <Text>Charging status: {status}</Text>}
-        {data ? 
-        data.map(station => (
-          <View style={styles.stationContainer} key={station.ID}>
-          <Text>{station.AddressInfo.AddressLine1}</Text>
-          <Text>{station.AddressInfo.Distance.toFixed(2)} miles away</Text>
-          <TouchableOpacity style={styles.button} onPress={() => onPress(station.ID)}><Text>Start charging</Text></TouchableOpacity>
-          </View>
-        ))
-        : <Text>Fetching data...</Text> }
+        {data && 
+          data.map(station => (
+            <View style={styles.stationContainer} key={station.ID}>
+            <Text>{station.AddressInfo.AddressLine1}</Text>
+            <Text>{station.AddressInfo.Distance.toFixed(2)} miles away</Text>
+            <TouchableOpacity style={styles.button} onPress={() => onPress(station.ID)}><Text>Start charging</Text></TouchableOpacity>
+            </View>
+          )) }
+        {!data && !errorMsg && <Text>Fetching data...</Text>}
+        
         </View>
        </ScrollView>
     </SafeAreaView>
