@@ -26,10 +26,10 @@ export default function App() {
       charger_id: id
     })
     setStatus(response.status)
-  }
-  catch (e) {
-    setStatus(e.message)
-  }
+    }
+    catch (e) {
+      setStatus(e.message)
+    }
   }
 
   useEffect(async () => {
@@ -37,7 +37,7 @@ export default function App() {
     const { latitude, longitude } = location.coords
     const stations = await getChargingStations(latitude, longitude)
     setData(stations)
-
+    console.log(stations)
   }, [location])  
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function App() {
         {data && 
           data.map(station => (
             <View style={styles.stationContainer} key={station.ID}>
-            <Text>{station.AddressInfo.AddressLine1}</Text>
+            <Text>{station.OperatorInfo ? `${station.OperatorInfo.Title} | ` : ''}{station.AddressInfo.AddressLine1}</Text>
             <Text>{station.AddressInfo.Distance.toFixed(2)} miles away</Text>
             <TouchableOpacity style={styles.button} onPress={() => onPress(station.ID)}><Text>Start charging</Text></TouchableOpacity>
             </View>
